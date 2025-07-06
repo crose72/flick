@@ -33,30 +33,31 @@ set(CMAKE_C_FLAGS "-Wall -Wextra -Werror -nostdlib -ffreestanding -fno-builtin -
 add_compile_definitions(STM32H743xx)
 
 # Linker script
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/platform/linker/stm32_flash_h743_2m.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/platform/STM32H7/linker/stm32_flash_h743_2m.ld)
 
 # Sources
 set(SRC
     src/main.c
-    platform/system_stm32h7xx.c
-    platform/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
-    platform/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c
-    platform/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c
-    platform/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c
+    platform/STM32H7/system_stm32h7xx.c
+    platform/STM32H7/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
+    platform/STM32H7/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c
+    platform/STM32H7/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_rcc.c
+    platform/STM32H7/Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c
 )
 
 # Includes
 include_directories(
     include
     platform
-    platform/STM32H7xx_HAL_Driver/Inc
-    platform/startup
+    platform/STM32H7/
+    platform/STM32H7/Drivers/STM32H7xx_HAL_Driver/Inc
+    platform/STM32H7/startup
     modules/config/configs/MATEKH743
-    platform/CMSIS/Include
+    platform/STM32H7/Drivers/CMSIS/Include
 )
 
 # Executable and linking
-add_executable(${PROJECT_NAME}.elf ${SRC} platform/startup/startup_stm32h743xx.s)
+add_executable(${PROJECT_NAME}.elf ${SRC} platform/STM32H7/startup/startup_stm32h743xx.s)
 
 target_link_options(${PROJECT_NAME}.elf PRIVATE
     -T${LINKER_SCRIPT}
